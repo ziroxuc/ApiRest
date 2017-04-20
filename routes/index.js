@@ -2,6 +2,7 @@
 
 const express = require('express');
 const api = express.Router();
+const auth = require("../middlewares/auth.js"); 
 
 const ProductCtrl = require('../controllers/product');
 
@@ -19,5 +20,9 @@ api.put('/product/:productId', ProductCtrl.updateProduct);
 
 //RUTA DELETE de uno
 api.delete('/product/:productId', ProductCtrl.deleteProduct);
+
+api.get('/private', auth, (req,res) => {
+    res.status(200).send({message: "Tienes acceso!"});
+})
 
 module.exports = api;
