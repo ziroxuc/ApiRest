@@ -3,23 +3,23 @@
 const express = require('express');
 const api = express.Router();
 const auth = require("../middlewares/auth.js"); 
+const userCtrl = require("../controllers/user.js");
 
 const ProductCtrl = require('../controllers/product');
 
-//RUTA GET todos los productos
-api.get('/product', ProductCtrl.getProducts);
+api.get('/product',auth, ProductCtrl.getProducts);
 
-//RUTA GET DE A UNO
 api.get('/product/:productId', ProductCtrl.getProducts);
 
-//RUTA POST todos los productos
 api.post('/product', ProductCtrl.saveProduct);
 
-//RUTA PUT de uno
 api.put('/product/:productId', ProductCtrl.updateProduct);
 
-//RUTA DELETE de uno
 api.delete('/product/:productId', ProductCtrl.deleteProduct);
+
+api.post('/signup', userCtrl.signUp);
+
+api.post('/signin', userCtrl.signIn);
 
 api.get('/private', auth, (req,res) => {
     res.status(200).send({message: "Tienes acceso!"});
